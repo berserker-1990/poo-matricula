@@ -4,6 +4,10 @@ public class Clase {
 	private String codigo;
 	private String nombre;
 	
+	public Clase() {
+		
+	}
+	
 	public Clase (String codigo, String nombre) {
 		this.codigo = codigo;
 		this.nombre = nombre;
@@ -22,5 +26,9 @@ public class Clase {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-
+	
+	@Override
+    public String toString() { 
+        return String.format("\nCódigo: " + this.getCodigo() + "\nClase: " + this.getNombre()); 
+    }
 }

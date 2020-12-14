@@ -1,16 +1,22 @@
 package matricula;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Seccion {
 	private String seccionId;
-	private String horaInicial;
-	private String horaFinal;
+	private String hora;
 	private ProfesorIS profesorIs;
-	private Alumno[] listaAlumnos = new Alumno [30];
+	private Clase clase;
+	private List<Alumno> listaAlumnos;
 	
-	public Seccion (String seccionId, String horaInicial, String horaFinal) {
+	public Seccion (String seccionId, String hora, ProfesorIS profesorIs, Clase clase) {
 		this.setSeccionId(seccionId);
-		this.setHoraInicial(horaInicial);
-		this.setHoraFinal(horaFinal);
+		this.setHora(hora);
+		this.setProfesorIs(profesorIs);
+		this.setClase(clase);
+		this.listaAlumnos = new ArrayList<Alumno>();
+		
 	}
 
 	public String getSeccionId() {
@@ -21,28 +27,42 @@ public class Seccion {
 		this.seccionId = seccionId;
 	}
 
-	public String getHoraInicial() {
-		return horaInicial;
+	public String getHora() {
+		return hora;
 	}
 
-	public void setHoraInicial(String horaInicial) {
-		this.horaInicial = horaInicial;
+	public void setHora(String hora) {
+		this.hora = hora;
 	}
 
-	public String getHoraFinal() {
-		return horaFinal;
+	public ProfesorIS getProfesorIs() {
+		return profesorIs;
 	}
 
-	public void setHoraFinal(String horaFinal) {
-		this.horaFinal = horaFinal;
+	public void setProfesorIs(ProfesorIS profesorIs) {
+		this.profesorIs = profesorIs;
 	}
 
-	public Alumno[] getListaAlumnos() {
+	public List<Alumno> getListaAlumnos() {
 		return listaAlumnos;
 	}
-	
-	//Cambiar este
-	public void setListaAlumnos(Alumno[] listaAlumnos) {
+
+	public void setListaAlumnos(List<Alumno> listaAlumnos) {
 		this.listaAlumnos = listaAlumnos;
 	}
+
+	public Clase getClase() {
+		return clase;
+	}
+
+	public void setClase(Clase clase) {
+		this.clase = clase;
+	}
+	
+	@Override
+    public String toString() { 
+        return String.format("\nSeccionId: " + this.getSeccionId() + "\nHora: " + this.getHora() + "\nClase: " 
+        		+ this.getClase().getNombre() + "\nProfesor: " + this.getProfesorIs().getNombre() + " " + this.getProfesorIs().getApellido()
+        		+ "\nNro. de alumnos: " + this.getListaAlumnos().size()); 
+    }
 }

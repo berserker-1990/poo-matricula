@@ -15,4 +15,10 @@ public class Alumno extends Persona{
 	public void setNumeroRegistro(String numeroRegistro) {
 		this.numeroRegistro = numeroRegistro;
 	}
+	
+	@Override
+    public String toString() { 
+        return String.format("\nIdentidad: " + this.getIdentidad() + "\nNombre: " + this.getNombre() + " " + this.getApellido() + 
+        		"\nNro.Registro: " + this.getNumeroRegistro()); 
+    }
 }
