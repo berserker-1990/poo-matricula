@@ -1,12 +1,12 @@
 package matricula;
 
 public interface Registro {
-	//Método para registrar un profesor
-	public void RegistrarProfesorIS(String identidad, String nombre, String apellido, String numeroColegiado,String numeroEmpleado,Float sueldo);
-	//Método para eliminar un profesor
-	public void EliminarProfesorIS(String identidad);
-	
-	
+//	//Método para registrar un profesor
+//	public void RegistrarProfesorIS();
+//	//Método para eliminar un profesor
+//	public void EliminarProfesorIS();
+//	
+//	
 //	//Método para registrar un alumno
 //	public void RegistrarAlumno();
 //	//Método para eliminar un alumno

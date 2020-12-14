@@ -5,6 +5,10 @@ public abstract class Persona {
 	private String nombre;
 	private String apellido;
 	
+	public Persona() {
+		
+	}
+	
 	public Persona(String identidad, String nombre, String apellido) {
 		this.setIdentidad(identidad);
 		this.setNombre(nombre);

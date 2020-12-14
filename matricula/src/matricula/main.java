@@ -1,11 +1,17 @@
 package matricula;
 import java.util.Scanner;
+
+import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 
 public class main implements Registro{
 
 	public static void main(String[] args) {
 		//Declarando variables
+		List<ProfesorIS> listProfesores = new ArrayList<ProfesorIS>();
+		List<Alumno> listAlumnos = new ArrayList<Alumno>();
+		
 		int opcion;//Variable que almacena la opcion seleccionada  del menu principal(DEBE SER UN ENTERO)
 		int opcionRegistrar;//Variable que almacena la opcion seleccionada  del menu registrar 
 		int opcionMatricular;//Variable que almacena la opcion seleccionada  del menu matricular
@@ -26,7 +32,7 @@ public class main implements Registro{
 						
 							switch (opcionRegistrar) {
 								case 1:
-									System.out.println("Registrar profesorIS");
+									RegistrarProfesorIS(teclado, listProfesores);
 									break;
 								case 2:
 									System.out.println("Registrar alumno");
@@ -102,18 +108,55 @@ public class main implements Registro{
 		System.out.print("Seleccione una opción: ");
 	}
 	
-	//IMPLEMENTANDO MÉTODOS DE LA INTERFACE Registro
-	@Override
-	public void RegistrarProfesorIS(String identidad, String nombre, String apellido, String numeroColegiado,
-			String numeroEmpleado, Float sueldo) {
-		// TODO Esbozo de método generado automáticamente
+	//Método para registrar un profesor
+	public static void RegistrarProfesorIS(Scanner teclado, List<ProfesorIS> listProfesores) {
+		//Declarando variables necesarias para el profesor
+		String identidad; 
+		String nombre;
+		String apellido; 
+		String numeroColegiado;
+		String numeroEmpleado; 
+		Float sueldo;
 		
-	}
-
-	@Override
-	public void EliminarProfesorIS(String identidad) {
-		// TODO Esbozo de método generado automáticamente
+		//Capturando los datos
+		System.out.print("\nIngrese la identidad: ");
+		identidad = teclado.next();
+		System.out.print("\nIngrese el nombre: ");
+		nombre = teclado.next();
+		System.out.print("\nIngrese el apellido: ");
+		apellido = teclado.next();
+		System.out.print("\nIngrese el número de colegiado: ");
+		numeroColegiado = teclado.next();
+		System.out.print("\nIngrese el número de empleado: ");
+		numeroEmpleado = teclado.next();
+		System.out.print("\nIngrese el sueldo: ");
+		sueldo = teclado.nextFloat();
 		
+		//set a las propiedades del objeto profesor
+		ProfesorIS profesor = new ProfesorIS();
+		profesor.setIdentidad(identidad);
+		profesor.setNombre(nombre);
+		profesor.setApellido(apellido);
+		profesor.setNumeroColegiado(numeroColegiado);
+		profesor.setNumeroEmpleado(numeroEmpleado);
+		profesor.setSueldo(sueldo);
+		
+		//Imprimiendo el profesor creado
+		System.out.println("\n*****************************");
+		System.out.println("**Empleado crado con éxito!**");
+		System.out.println("*****************************");
+		//System.out.println("\nDatos del empelado: \n" + profesor.toString());
+		
+		//Insertando el profesor a la lista
+		listProfesores.add(profesor);
+		System.out.println("\nLista de empleados: \n" );
+		listProfesores.toString();
+		for(ProfesorIS element : listProfesores) {
+			System.out.println(element.toString());
+		}
+		System.out.println("\n" );
 	}
+	
+	
 
 }

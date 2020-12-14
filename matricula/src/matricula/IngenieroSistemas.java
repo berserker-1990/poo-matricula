@@ -3,6 +3,10 @@ package matricula;
 public class IngenieroSistemas extends Persona{
 	private String numeroColegiado;
 	
+	public IngenieroSistemas() {
+		super();
+	}
+	
 	public IngenieroSistemas(String identidad, String nombre, String apellido,String numeroColegiado) {
 		super(identidad, nombre, apellido);
 		this.setNumeroColegiado(numeroColegiado);
