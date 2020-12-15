@@ -8,6 +8,10 @@ public class Alumno extends Persona{
 		this.setNumeroRegistro(numeroRegistro);
 	}
 
+	public Alumno() {
+		
+	}
+
 	public String getNumeroRegistro() {
 		return numeroRegistro;
 	}
@@ -19,6 +23,6 @@ public class Alumno extends Persona{
 	@Override
     public String toString() { 
         return String.format("\nIdentidad: " + this.getIdentidad() + "\nNombre: " + this.getNombre() + " " + this.getApellido() + 
-        		"\nNro.Registro: " + this.getNumeroRegistro()); 
+        		"\nNro.Registro: " + this.getNumeroRegistro() + "\n"); 
     }
 }

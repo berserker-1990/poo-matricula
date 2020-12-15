@@ -1,6 +1,6 @@
 package matricula;
 
-public class ProfesorIS extends IngenieroSistemas{
+public class ProfesorIS extends IngenieroSistemas implements Profesor{
 	private String numeroEmpleado;
 	private Float sueldo;
 	
@@ -35,6 +35,11 @@ public class ProfesorIS extends IngenieroSistemas{
         return String.format("\nIdentidad: " + this.getIdentidad() + "\nNombre: " + this.getNombre() + " " + this.getApellido() + 
         		"\nNro. colegiado: " + this.getNumeroColegiado() + "\nNro. empleado: " + this.numeroEmpleado + "\nSueldo: " + this.getSueldo().toString()); 
     }
+
+	@Override
+	public void darClases() {
+		System.out.print("El ing. " + this.getNombre() + " " + this.getApellido() + " está listo para impartir la clase ");
+	}
 	
 
 }

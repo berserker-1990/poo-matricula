@@ -19,6 +19,10 @@ public class Seccion {
 		
 	}
 
+	public Seccion() {
+		
+	}
+
 	public String getSeccionId() {
 		return seccionId;
 	}
@@ -57,6 +61,16 @@ public class Seccion {
 
 	public void setClase(Clase clase) {
 		this.clase = clase;
+	}
+	
+	public void addAlumno(Alumno alumno) {
+		this.listaAlumnos.add(alumno);
+	}
+	
+	public void imprimirAlumnos() {
+		for(Alumno alumno: this.listaAlumnos) {
+			System.out.println(alumno.toString());
+		}
 	}
 	
 	@Override

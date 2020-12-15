@@ -2,6 +2,7 @@ package matricula;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -47,8 +48,12 @@ public class Principal {
 									break;
 								case 4:
 									RegistrandoSeccion(teclado, listSecciones, administradorPrograma, listProfesores, listClases, listAlumnos);
+									break;
+								case 5:
+									EliminarSeccion(teclado, listSecciones, administradorPrograma);
+									break;
 								default:
-			                        System.out.println("Solo números entre 1 y 4");
+			                        System.out.println("Solo números entre 1 y 5");
 			                        break;
 							}
 							MostrarMenuPrincipal();
@@ -59,10 +64,10 @@ public class Principal {
 						
 						switch (opcionMatricular) {
 							case 1:
-								System.out.println("Matricular alumno");
+								AgregandoAlumno(teclado, listSecciones, administradorPrograma, listAlumnos);
 								break;
 							case 2:
-								System.out.println("Cancelar alumno");
+								CancelandoALumno(teclado, listSecciones, administradorPrograma, listAlumnos);
 								break;
 							default:
 		                        System.out.println("Solo números entre 1 y 4");
@@ -101,7 +106,8 @@ public class Principal {
 		System.out.println("1- Registrar profesorIS");
 		System.out.println("2- Registrar alumno");
 		System.out.println("3- Crear clase");
-		System.out.println("4- Crear sección\n");
+		System.out.println("4- Crear sección");
+		System.out.println("5- Eliminar sección\n");
 		System.out.print("Seleccione una opción: ");
 	}
 	
@@ -139,7 +145,7 @@ public class Principal {
 		
 		//Mostrar mensaje de confirmación
 		System.out.println("\n******************************");
-		System.out.println("**Empleado creado con éxito!**");
+		System.out.println("**Profesor creado con éxito!**");
 		System.out.println("******************************");
 		//System.out.println("\nDatos del empelado: \n" + profesor.toString());
 		
@@ -221,14 +227,14 @@ public class Principal {
 		String hora;
 		String numeroEmpleado;
 		String codigoClase;
-		Boolean encontrado = false; //Variable para validar si encuentra o no el profesor
+		Boolean encontrado = false; //Variable para validar si encuentra o no el profesor o la sección
 		ProfesorIS profesor = new ProfesorIS();
 		Clase clase = new Clase();
 		
 		
-		if(listProfesores.size()> 0) {
+		if (listProfesores.size()> 0) {
 			if(listClases.size()> 0) {
-				//Capturando los datos
+				//Capturando los datos1
 				System.out.print("\nIngrese el id de la sección: ");
 				seccionId = teclado.next();
 				System.out.print("\nIngrese la hora: ");
@@ -266,7 +272,7 @@ public class Principal {
 					System.out.print("\nIngrese el código de la clase: ");
 					codigoClase= teclado.next();
 					
-					//Recorrer arreglo de profesores para encontrar el código
+					//Recorrer arreglo de clases para encontrar el código
 					for(Clase element: listClases) {
 						if(element.getCodigo().toLowerCase().equals(codigoClase.toLowerCase())) {
 							encontrado = true;
@@ -283,18 +289,183 @@ public class Principal {
 				//Creando la sección y agregandola
 				listSecciones.add(administradorPrograma.CrearSeccion(seccionId, hora, profesor, clase));
 				
+				//Mostrar mensaje de confirmación
+				System.out.println("\n******************************");
+				System.out.println("***Sección creada con éxito!***");
+				System.out.println("******************************\n");
+				
+				profesor.darClases();
+				System.out.print(clase.getNombre());
+				
 				System.out.println("\nLista de secciones: \n" );
 				//Imprimiendo la lista de secciones
 				for(Seccion element: listSecciones) {
 					System.out.println(element.toString());
 				}
+				
 			}else {
 				System.out.print("\nNo hay clases registradas, vaya a Registrar y después a Registrar clase\n");
 			}
+
 		}else {
 			System.out.print("\nNo hay profesores registrados, vaya a Registrar y después a Registrar profesorIS\n");
 		}
 		
 	}
-
+	
+	
+	//Llama al método que elimina la sección
+	public static void EliminarSeccion(Scanner teclado, List<Seccion> listSecciones, IngenieroSistemas administradorPrograma) {
+		//Declarando variables necesarias para la clase
+		String seccionId;
+		Boolean encontrado = false; //Variable que sirve validar si encuentra la sección
+		
+		
+		//Capturando los datos
+		System.out.print("\nIngrese el id de la sección: ");
+		seccionId = teclado.next();
+		
+		//Lamando al método que elimina la sección, devuelve un booleano, true si lo encuentra y elimina
+		encontrado = administradorPrograma.EliminarSeccion(seccionId, listSecciones);
+        
+		if(! encontrado) {
+			System.out.print("\nNo se encontró ninguna sección con ese id\n");	
+		}else {
+			//Mostrar mensaje de confirmación
+			System.out.println("\n******************************");
+			System.out.println("**Sección eliminada con éxito!*");
+			System.out.println("******************************");
+			
+			System.out.println("\nLista de secciones: \n" );
+			//Imprimiendo la lista de secciones
+			for(Seccion element: listSecciones) {
+				System.out.println(element.toString());
+			}
+		}	
+	}
+	
+	//Llama al método que elimina la sección
+	public static void AgregandoAlumno(Scanner teclado, List<Seccion> listSecciones, IngenieroSistemas administradorPrograma,  List<Alumno> listAlumnos) {
+		//Declarando variables necesarias para la clase
+		String seccionId;
+		String numeroRegistro;
+		Boolean seccionEncontrada = false; //Variable que sirve validar si encuentra la sección
+		Boolean alumnoEncontrado = false; //Variable que sirve validar si encuentra el alumno
+		
+		//Validando si hay secciones creadas y alumnos registrados
+		if(listSecciones.size()> 0) {
+			if(listAlumnos.size()> 0) {
+				//Capturando los datos
+				System.out.print("\nIngrese el id de la sección: ");
+				seccionId = teclado.next();
+				System.out.print("\nIngrese el número de registro del alumno: ");
+				numeroRegistro = teclado.next();
+				
+				//Recorrer la secciones para encontrar la sección
+				for(Seccion seccion: listSecciones) {
+					if(seccion.getSeccionId().toLowerCase().equals(seccionId.toLowerCase())) {
+						seccionEncontrada = true;
+						//Recorrer los alumnos para encontrar el alumno
+						for(Alumno alumno: listAlumnos) {
+							if(alumno.getNumeroRegistro().toLowerCase().equals(numeroRegistro.toLowerCase())) {
+								alumnoEncontrado = true;
+								//Si existe la sección y el alumno llama al método agregarAlumno
+								administradorPrograma.AgregarAlumno(seccion, alumno);
+								//Mostrar mensaje de confirmación
+								System.out.println("\n******************************");
+								System.out.println("**Alumno agregado con éxito!***");
+								System.out.println("******************************");
+								//Imprimir la sección y el alumno
+								System.out.println(seccion.toString());
+								System.out.println("\nLista de Alumnos: ");
+								seccion.imprimirAlumnos();
+							}	
+						}
+					}
+				}
+				
+				if(!seccionEncontrada || !alumnoEncontrado) {
+					System.out.print("\nSección o alumno no encontrado\n");
+				}
+				
+			}else {
+				System.out.print("\nNo hay alumnos registrados, vaya a Registrar y después a Registrar alumno\n");
+			}
+		}else {
+			System.out.print("\nNo hay secciones creadas, vaya a Registrar y después a Crear sección\n");
+		}
+	}
+	
+	public static void CancelandoALumno(Scanner teclado, List<Seccion> listSecciones, IngenieroSistemas administradorPrograma, List<Alumno> listAlumnos) {
+		//Declarando variables necesarias para la clase
+		String seccionId;
+		String numeroRegistro;
+		Boolean seccionEncontrada = false; //Variable que sirve validar si encuentra la sección
+		Boolean alumnoEncontrado = false;  //Variable que sirve validar si encuentra el alumno
+		
+		//Validando si hay secciones creadas y alumnos registrados
+		if(listSecciones.size()> 0) {
+			if(listAlumnos.size()> 0) {
+				//Capturando los datos
+				System.out.print("\nIngrese el id de la sección: ");
+				seccionId = teclado.next();
+				System.out.print("\nIngrese el número de registro del alumno: ");
+				numeroRegistro = teclado.next();
+				
+				//Recorrer la secciones para encontrar la sección
+				for(Seccion seccion: listSecciones) {
+					if(seccion.getSeccionId().toLowerCase().equals(seccionId.toLowerCase())) {
+						seccionEncontrada = true;
+						//Recorrer los alumnos para encontrar el alumno
+						for(Alumno alumno: listAlumnos) {
+							if(alumno.getNumeroRegistro().toLowerCase().equals(numeroRegistro.toLowerCase())) {
+								alumnoEncontrado = true;
+								//Si existe la sección y el alumno llama al método agregarAlumno
+								administradorPrograma.CancelarAlumno(seccion, alumno);
+								//Mostrar mensaje de confirmación
+								System.out.println("\n******************************");
+								System.out.println("**Alumno eliminado con éxito!**");
+								System.out.println("******************************");
+								//Imprimir la sección y el alumno
+								System.out.println(seccion.toString());
+								System.out.println("\nLista de Alumnos: ");
+								seccion.imprimirAlumnos();
+							}	
+						}
+					}
+				}
+				
+				if(!seccionEncontrada || !alumnoEncontrado) {
+					System.out.print("\nSección o alumno no encontrado\n");
+				}
+				
+			}else {
+				System.out.print("\nNo hay alumnos registrados, vaya a Registrar y después a Registrar alumno\n");
+			}
+		}else {
+			System.out.print("\nNo hay secciones creadas, vaya a Registrar y después a Crear sección\n");
+		}
+		
+//		//Capturando los datos
+//		System.out.print("\nIngrese el id de la sección: ");
+//		seccionId = teclado.next();
+//		
+//		//Lamando al método que elimina la sección, devuelve un booleano, true si lo encuentra y elimina
+//		encontrado = administradorPrograma.EliminarSeccion(seccionId, listSecciones);
+//        
+//		if(! encontrado) {
+//			System.out.print("\nNo se encontró ninguna sección con ese id\n");	
+//		}else {
+//			//Mostrar mensaje de confirmación
+//			System.out.println("\n******************************");
+//			System.out.println("**Sección eliminada con éxito!*");
+//			System.out.println("******************************");
+//			
+//			System.out.println("\nLista de secciones: \n" );
+//			//Imprimiendo la lista de secciones
+//			for(Seccion element: listSecciones) {
+//				System.out.println(element.toString());
+//			}
+//		}
+	}
 }

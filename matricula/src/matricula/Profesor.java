@@ -1,5 +1,5 @@
 package matricula;
 
 public interface Profesor{
-	void crearSeccion();
+	void darClases();
 }
